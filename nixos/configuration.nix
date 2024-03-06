@@ -56,7 +56,9 @@
 		'';
 	};
 	#desktopManager.plasma5.enable = true;
-	windowManager.i3.enable = true;
+	windowManager.i3 = {
+		enable = true;
+	};
 	
         # Configure keymap in X11
 	layout = "us";
@@ -130,6 +132,8 @@
  	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 	wget
 	wordgrinder
+
+	i3status-rust
   ];
 
   fonts.packages = with pkgs; [
@@ -148,7 +152,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

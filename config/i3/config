@@ -187,16 +187,19 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status -c /home/$USER/.config/i3/i3status.conf
+	#font pango:DejaVu Sans Mono, FontAwesome 8
+	font pango:RobotoMono Nerd Font 8
+        #status_command i3status -c /home/$USER/.config/i3/i3status.conf
+        status_command i3status-rs /home/$USER/.config/i3/i3status-rust/config.toml
 	position top
-	binding_mode_indicator yes
-	padding 0 4px 0 2px
-	font pango:RobotoMono Nerd Font Bond 6
-	colors {
-		background #000000
-		statusline #BBBBBB
-		separator #666666
-	}
+	#binding_mode_indicator yes
+	#padding 0 4px 0 2px
+	#font pango:RobotoMono Nerd Font Bond 6
+	#colors {
+	#	background #000000
+		#statusline #BBBBBB
+		#separator #666666
+	#}
 }
 
 default_border pixel 1
@@ -251,6 +254,9 @@ bindsym $mod+Ctrl+Shift+m mode "$mode_system"
 for_window [window_role = "pop-up"] floating enable
 for_window [window_role = "tasks_dialog"] floating enable
 floating_maximum_size 400 x 300
+
+# border_radius 4
+
 
 exec --no-startup-id clipit
 
