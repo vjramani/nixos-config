@@ -193,7 +193,9 @@ bar {
         status_command i3status-rs /home/$USER/.config/i3/i3status-rust/config.toml
 	position top
 	binding_mode_indicator yes
-	padding 0 4px 0 4px
+
+	# padding top right botton left
+	padding 0px 4px 0px 4px
 	#font pango:RobotoMono Nerd Font Bond 6
 	#colors {
 	#	background #000000
