@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+#	<home-manager/nixos>
     ];
 
   # Bootloader.
@@ -106,6 +107,21 @@
  	firefox
     ];
   };
+#	home-manager.users.vj = {pkgs, ...}: {
+#		home.packages = with pkgs; [
+#			asciiquarium
+#		];
+#		programs.neovim = {
+#			enable = true;
+#			extraConfig = ''
+#				set number relativenumber
+#			'';
+#		};
+#		#programs.asciiquarium.enable = true;
+#		programs.home-manager.enable = true;
+#
+#		home.stateVersion = "23.11";
+#	};
 
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
@@ -130,12 +146,29 @@
 	ranger
 	rofi
 	tty-clock
- 	vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+ 	lunarvim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 	wget
 	wordgrinder
 
 	i3status-rust
   ];
+
+  programs.starship = {
+  	enable = true;
+    settings = lib.importTOML /home/vj/.config/starship.toml;
+#	settings = {
+#		format = ''
+#		[┌───────────────────>](bold green)
+#		[│](bold green)$directory$rust$package
+#		[└─>](bold green) '';
+#
+#		# Wait 10 milliseconds for starship to check files under the current directory.
+#		scan_timeout = 10;
+#
+#		# Disable the blank line at the start of the prompt
+#		add_newline = false;
+#	};
+  };
 
   fonts.packages = with pkgs; [
 	(nerdfonts.override { fonts = ["FiraCode" "SpaceMono" "RobotoMono"]; })
