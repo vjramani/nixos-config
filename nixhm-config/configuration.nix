@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{  pkgs,  ... }:
+{  pkgs, lib, ... }:
 let
   user = "vj";
 in
@@ -88,6 +88,83 @@ in
     programs.home-manager.enable = true;
 
     programs.bash.enable = true;
+
+    # i3 settings
+    xsession = {
+      enable = true;
+      windowManager.i3 = {
+        enable = true;
+        config = {
+          modifier = "Mod4";
+          #menu = "rofi -show combi -show-icons";
+          keybindings = let
+              modifier = "Mod4";
+            in lib.mkOptionDefault{
+              "${modifier}+Return" = "exec alacritty";
+              "Ctrl+Shift+q" = "kill";
+              "${modifier}+d" = "exec rofi -show combi -show-icons";
+
+              "${modifier}+h" = "focus left";
+              "${modifier}+j" = "focus down";
+              "${modifier}+k" = "focus up";
+              "${modifier}+l" = "focus right";
+              
+              "${modifier}+Shift+h" = "move left";
+              "${modifier}+Shift+j" = "move down";
+              "${modifier}+Shift+k" = "move up";
+              "${modifier}+Shift+l" = "move right";
+
+              "${modifier}+Ctrl+h" = "split h";
+              "${modifier}+Ctrl+v" = "split v";
+
+              "${modifier}+f" = "fullscreen toggle";
+
+              "${modifier}+Shift+c" = "reload";
+              "${modifier}+Shift+r" = "restart";
+
+              "${modifier}+0" = "workspace number 0";
+              "${modifier}+1" = "workspace number 1";
+              "${modifier}+2" = "workspace number 2";
+              "${modifier}+3" = "workspace number 3";
+              "${modifier}+4" = "workspace number 4";
+              "${modifier}+5" = "workspace number 5";
+              "${modifier}+6" = "workspace number 6";
+              "${modifier}+7" = "workspace number 7";
+              "${modifier}+8" = "workspace number 8";
+              "${modifier}+9" = "workspace number 9";
+
+              "${modifier}+Shift+0" = "move container to workspace number 0";
+              "${modifier}+Shift+1" = "move container to workspace number 1";
+              "${modifier}+Shift+2" = "move container to workspace number 2";
+              "${modifier}+Shift+3" = "move container to workspace number 3";
+              "${modifier}+Shift+4" = "move container to workspace number 4";
+              "${modifier}+Shift+5" = "move container to workspace number 5";
+              "${modifier}+Shift+6" = "move container to workspace number 6";
+              "${modifier}+Shift+7" = "move container to workspace number 7";
+              "${modifier}+Shift+8" = "move container to workspace number 8";
+              "${modifier}+Shift+9" = "move container to workspace number 9";
+            };
+          gaps = {
+            vertical = 4;
+            horizontal = 4;
+            top = 4;
+            bottom = 4;
+            right = 4;
+            left = 4;
+          };
+          bars = [];
+          window = {
+            border = 2;
+            titlebar = false;
+            hideEdgeBorders = "both";
+          };
+          workspaceAutoBackAndForth = true;
+          startup = [
+            { command = "feh --bg-fill --randomize /home/vj/wallpapers/*"; always = true; notification = false; }
+          ];
+        };
+      };
+    };
     
     # temporary settings to make vim more usable
     programs.vim = {
@@ -122,7 +199,16 @@ in
         settings = builtins.fromTOML (builtins.readFile ./starship.toml);
     };
 
-    programs.i3status-rust.enable = true;
+    # polybar settings
+    services.polybar = {
+        enable = true;
+        script = ''
+          killall -q polybar
+          polybar status &
+          '';
+        config = ./polybar;
+    };
+
 
     home.packages = with pkgs; [
       asciiquarium
@@ -142,6 +228,7 @@ in
     font-manager
     git
     htop
+    killall
     remarshal
     vim
     wget

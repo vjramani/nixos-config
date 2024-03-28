@@ -158,15 +158,6 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-bar {
-	font pango:FiraCode Nerd Font Mono Bold 6
-  	status_command i3status-rs
-	position top
-	binding_mode_indicator yes
-	# padding top right botton left
-	padding 0px 4px 0px 4px
-}
-
 default_border pixel 1
 gaps inner 2px
 gaps outer 2px
