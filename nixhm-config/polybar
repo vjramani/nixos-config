@@ -22,7 +22,7 @@ icon_circle_empty = ""
 bottom = false
 fixed-center = true
 width = 100%
-height = 16
+height = 20
 background = ${colors.background}
 foreground = ${colors.foreground}
 border-top-size = 0
@@ -31,7 +31,8 @@ padding = 1
 module-margin-right = 0
 module-margin-left = 0
 font-0 = "NotoMono Nerd Font Mono:style=Bold:size=10;2"
-font-1 = "NotoMono Nerd Font Mono:style=Bold:size=14;2"
+font-1 = "NotoMono Nerd Font Mono:style=Bold:size=14;3"
+font-2 = "NotoMono Nerd Font Mono:style=Bold:size=14;3"
 override-redirect = false
 modules-right = lsep-g-bg disks lsep-y-g memory lsep-o-y datetime 
 modules-left = spaces
@@ -45,27 +46,26 @@ compositing-underline = over
 compositing-border = over
 pseudo-transparency = false
 
-[module/sep]
-type = custom/text
-format = " "
-
 [module/lsep-o-y]
 type = custom/text
 format = ${glyphs.icon_arrow_left}
 format-foreground = ${colors.orange}
 format-background = ${colors.yellow}
+format-font = 3
 
 [module/lsep-y-g]
 type = custom/text
 format = ${glyphs.icon_arrow_left}
 format-foreground = ${colors.yellow}
 format-background = ${colors.green}
+format-font = 3
 
 [module/lsep-g-bg]
 type = custom/text
 format = ${glyphs.icon_arrow_left}
 format-foreground = ${colors.green}
 format-background = ${colors.background}
+format-font = 3
 
 [module/datetime]
 type = internal/date
@@ -78,18 +78,16 @@ format-background = ${colors.orange}
 
 [module/spaces]
 type = internal/xworkspaces
-#pin-workspaces = true
-#format = <label-state>
 label-active = ${glyphs.icon_circle_filled}
 label-active-foreground = ${colors.foreground}
 label-active-background = ${colors.background}
 label-active-font = 2
-label-active-padding = 2px
+label-active-padding = 4px
 label-occupied = ${glyphs.icon_circle_empty}
 label-occupied-foreground = ${colors.mid-foreground}
 label-occupied-background = ${colors.background}
 label-occupied-font = 2
-label-occupied-padding = 2px
+label-occupied-padding = 4px
 
 [module/memory]
 type = internal/memory
