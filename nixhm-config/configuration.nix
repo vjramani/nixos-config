@@ -92,78 +92,88 @@ in
     # i3 settings
     xsession = {
       enable = true;
-      windowManager.i3 = {
+      windowManager.i3 = let
+        modkey = "Mod4";
+      in{
         enable = true;
         config = {
-          modifier = "Mod4";
-          defaultWorkspace = "workspace number 1";
-          keybindings = let
-              modifier = "Mod4";
-            in lib.mkOptionDefault{
-              "${modifier}+Return" = "exec alacritty";
-              "Ctrl+Shift+q" = "kill";
-              "${modifier}+d" = "exec rofi -show combi -show-icons";
-
-              "${modifier}+h" = "focus left";
-              "${modifier}+j" = "focus down";
-              "${modifier}+k" = "focus up";
-              "${modifier}+l" = "focus right";
-              
-              "${modifier}+Shift+h" = "move left";
-              "${modifier}+Shift+j" = "move down";
-              "${modifier}+Shift+k" = "move up";
-              "${modifier}+Shift+l" = "move right";
-
-              "${modifier}+Ctrl+h" = "split h";
-              "${modifier}+Ctrl+v" = "split v";
-
-              "${modifier}+f" = "fullscreen toggle";
-
-              "${modifier}+Shift+c" = "reload";
-              "${modifier}+Shift+r" = "restart";
-
-              "${modifier}+1" = "workspace number 1";
-              "${modifier}+2" = "workspace number 2";
-              "${modifier}+3" = "workspace number 3";
-              "${modifier}+4" = "workspace number 4";
-              "${modifier}+5" = "workspace number 5";
-              "${modifier}+6" = "workspace number 6";
-              "${modifier}+7" = "workspace number 7";
-              "${modifier}+8" = "workspace number 8";
-              "${modifier}+9" = "workspace number 9";
-              "${modifier}+0" = "workspace number 10";
-
-              "${modifier}+Shift+1" = "move container to workspace number 1";
-              "${modifier}+Shift+2" = "move container to workspace number 2";
-              "${modifier}+Shift+3" = "move container to workspace number 3";
-              "${modifier}+Shift+4" = "move container to workspace number 4";
-              "${modifier}+Shift+5" = "move container to workspace number 5";
-              "${modifier}+Shift+6" = "move container to workspace number 6";
-              "${modifier}+Shift+7" = "move container to workspace number 7";
-              "${modifier}+Shift+8" = "move container to workspace number 8";
-              "${modifier}+Shift+9" = "move container to workspace number 9";
-              "${modifier}+Shift+0" = "move container to workspace number 10";
-
-              "${modifier}+p" = "workspace prev";
-              "${modifier}+n" = "workspace next";
-            };
-          gaps = {
-            vertical = 4;
-            horizontal = 4;
-            top = 4;
-            bottom = 4;
-            right = 4;
-            left = 4;
-          };
           bars = [];
+          modifier = "${modkey}";
+          defaultWorkspace = "workspace number 1";
+          keybindings = lib.mkOptionDefault{
+              "${modkey}+Return" = "exec --no-startup-id alacritty";
+              "Ctrl+Shift+q" = "kill";
+              "${modkey}+d" = "exec --no-startup-id rofi -show combi -show-icons";
+
+              "${modkey}+h" = "focus left";
+              "${modkey}+j" = "focus down";
+              "${modkey}+k" = "focus up";
+              "${modkey}+l" = "focus right";
+              
+              "${modkey}+Shift+h" = "move left";
+              "${modkey}+Shift+j" = "move down";
+              "${modkey}+Shift+k" = "move up";
+              "${modkey}+Shift+l" = "move right";
+
+              "${modkey}+Ctrl+h" = "split h";
+              "${modkey}+Ctrl+v" = "split v";
+
+              "${modkey}+f" = "fullscreen toggle";
+
+              "${modkey}+Shift+c" = "reload";
+              "${modkey}+Shift+r" = "restart";
+
+              "${modkey}+1" = "workspace number 1";
+              "${modkey}+2" = "workspace number 2";
+              "${modkey}+3" = "workspace number 3";
+              "${modkey}+4" = "workspace number 4";
+              "${modkey}+5" = "workspace number 5";
+              "${modkey}+6" = "workspace number 6";
+              "${modkey}+7" = "workspace number 7";
+              "${modkey}+8" = "workspace number 8";
+              "${modkey}+9" = "workspace number 9";
+              "${modkey}+0" = "workspace number 10";
+
+              "${modkey}+Shift+1" = "move container to workspace number 1";
+              "${modkey}+Shift+2" = "move container to workspace number 2";
+              "${modkey}+Shift+3" = "move container to workspace number 3";
+              "${modkey}+Shift+4" = "move container to workspace number 4";
+              "${modkey}+Shift+5" = "move container to workspace number 5";
+              "${modkey}+Shift+6" = "move container to workspace number 6";
+              "${modkey}+Shift+7" = "move container to workspace number 7";
+              "${modkey}+Shift+8" = "move container to workspace number 8";
+              "${modkey}+Shift+9" = "move container to workspace number 9";
+              "${modkey}+Shift+0" = "move container to workspace number 10";
+
+              "${modkey}+p" = "workspace prev";
+              "${modkey}+n" = "workspace next";
+
+              "${modkey}+r" = "mode resize";
+
+              "${modkey}+Ctrl+Return" = "exec --no-startup-id rofi -show p -modi p:rofi-power-menu";
+              #"${modkey}+Ctrl+Return" = "exec --no-startup-id i3lock -n -i /home/${user}/wallpapers/lock.png";
+            };
+          modes.resize = {
+            h = "resize shrink width 8px or 8 ppt";
+            j = "resize shrink height 8px or 8 ppt";
+            k = "resize grow height 8px or 8 ppt";
+            l = "resize grow width 8px or 8 ppt";
+            Return = "mode default";
+            Escape = "mode default";
+          };
+          gaps = {
+            inner = 2;
+          };
           window = {
-            border = 2;
+            border = 0;
             titlebar = false;
             hideEdgeBorders = "both";
           };
           workspaceAutoBackAndForth = true;
           startup = [
-            { command = "feh --bg-fill --randomize /home/vj/wallpapers/*"; always = true; notification = false; }
+            { command = "xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
+            #{ command = "xss-lock -l -n i3lock -n -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
+            { command = "feh --bg-fill --randomize /home/${user}/wallpapers/*"; always = true; notification = false; }
           ];
         };
       };
@@ -212,9 +222,10 @@ in
         config = ./polybar;
     };
 
-
     home.packages = with pkgs; [
       asciiquarium
+      rofi-power-menu
+      xss-lock
     ];
 
     home.stateVersion = "23.11";
