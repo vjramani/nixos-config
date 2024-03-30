@@ -172,7 +172,6 @@ in
           workspaceAutoBackAndForth = true;
           startup = [
             { command = "xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
-            #{ command = "xss-lock -l -n i3lock -n -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
             { command = "feh --bg-fill --randomize /home/${user}/wallpapers/*"; always = true; notification = false; }
           ];
         };
