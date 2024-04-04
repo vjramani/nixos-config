@@ -13,6 +13,8 @@ in
 	    <home-manager/nixos>
     ];
 
+    nix.settings.experimental-features = ["nix-command" "flakes"];
+
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
@@ -89,6 +91,12 @@ in
 
     programs.bash.enable = true;
 
+    programs.direnv = {
+      enable = true;
+      enableBashIntegration = true;
+      nix-direnv.enable = true;
+    };
+
     # i3 settings
     xsession = {
       enable = true;
@@ -151,7 +159,6 @@ in
               "${modkey}+r" = "mode resize";
 
               "${modkey}+Ctrl+Return" = "exec --no-startup-id rofi -show p -modi p:rofi-power-menu";
-              #"${modkey}+Ctrl+Return" = "exec --no-startup-id i3lock -n -i /home/${user}/wallpapers/lock.png";
             };
           modes.resize = {
             h = "resize shrink width 8px or 8 ppt";
@@ -171,7 +178,9 @@ in
           };
           workspaceAutoBackAndForth = true;
           startup = [
-            { command = "xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
+            #{ command = "xss-lock --transfer-sleep-lock -- i3lock --nofork -k --indicator --inside-color=3C3836FF --ring-color=665C54FF --insidever-color=458588FF --ringver-color=689D6AFF --insidewrong-color=CC241DFF --ringwrong-color=665C54FF -i /home/${user}/wallpapers/lock.png";always = true; notification = false;}
+            #{ command = "xss-lock --transfer-sleep-lock -- betterlockscreen -u '/home/${user}/wallpapers/lock.png'"; always = true; notification = false;}
+            #{ command = "xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/${user}/wallpapers/lock.png"; always = true; notification = false;}
             { command = "feh --bg-fill --randomize /home/${user}/wallpapers/*"; always = true; notification = false; }
           ];
         };
@@ -223,6 +232,8 @@ in
 
     home.packages = with pkgs; [
       asciiquarium
+      i3lock-color
+      lunarvim
       rofi-power-menu
       xss-lock
     ];
